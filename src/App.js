@@ -1,5 +1,5 @@
 import React from "react";
-import './App.css';
+import "./App.css";
 import ChatRoom from "./components/ChatRoom";
 import firebase from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -20,24 +20,24 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 function App() {
-  const [user] = useAuthState(auth);
+  const [hasLoggedIn] = useAuthState(auth);
   return (
     <div className="App">
-      <header className="App-header">
-        <section>
-          {user ? (
-            <ChatRoom firebase={firebase} auth={auth} firestore={firestore} />
-          ) : (
-            <SignIn />
-          )}
-        </section>
+      <header>
+        <h1>Welcome to the chat room 💬</h1>
       </header>
+      <section>
+        {hasLoggedIn ? (
+          <ChatRoom firebase={firebase} auth={auth} firestore={firestore} />
+        ) : (
+          <SignIn />
+        )}
+      </section>
     </div>
   );
 }
 
 export default App;
-
 
 function SignIn() {
   const signInWithGoogle = () => {
@@ -48,13 +48,12 @@ function SignIn() {
   };
 
   return (
-    <>
+    <center>
       <h1>Minimal Chat Room</h1>
       <button className="sign-in" onClick={signInWithGoogle}>
         Sign in with Google
       </button>
       <p>Please log in to continue to the chat-room.</p>
-    </>
+    </center>
   );
 }
-

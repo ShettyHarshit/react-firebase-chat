@@ -31,6 +31,7 @@ function ChatRoom(props) {
         {messages &&
           messages.map(msg => (
             <ChatMessage
+              auth={props.auth}
               user={props.auth.currentUser}
               key={msg.id}
               message={msg}
@@ -55,10 +56,15 @@ export default ChatRoom;
 
 function ChatMessage(props) {
   const { text } = props.message;
-
+  const { uid, photoURL } = props.user;
+  const messageClass = uid === props.auth.currentUser.uid ? "sent" : "received";
+  const avatar =
+    photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png";
+    
   return (
-    <div>
-      <p>{`${props.user.displayName}: ${text}`}</p>
+    <div className={`message ${messageClass}`}>
+      <img src={avatar} />
+      <p>{text}</p>
     </div>
   );
 }
