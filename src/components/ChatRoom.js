@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 function ChatRoom(props) {
+  const dummy = useRef();
   const messagesRef = props.firestore.collection("messages");
   const query = messagesRef.orderBy("createdAt").limit(25);
 
@@ -32,11 +33,12 @@ function ChatRoom(props) {
           messages.map(msg => (
             <ChatMessage
               auth={props.auth}
-              user={props.auth.currentUser}
               key={msg.id}
               message={msg}
             />
           ))}
+          <span ref={dummy}></span>
+          </main>
         <form onSubmit={sendMessage}>
           <input
             value={formValue}
@@ -47,7 +49,6 @@ function ChatRoom(props) {
             Send
           </button>
         </form>
-      </main>
     </>
   );
 }
@@ -55,15 +56,14 @@ function ChatRoom(props) {
 export default ChatRoom;
 
 function ChatMessage(props) {
-  const { text } = props.message;
-  const { uid, photoURL } = props.user;
+  const { text, uid, photoURL } = props.message;
   const messageClass = uid === props.auth.currentUser.uid ? "sent" : "received";
   const avatar =
     photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png";
-    
+
   return (
     <div className={`message ${messageClass}`}>
-      <img src={avatar} />
+      <img src={avatar} alt="avatar" />
       <p>{text}</p>
     </div>
   );

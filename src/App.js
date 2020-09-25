@@ -25,6 +25,7 @@ function App() {
     <div className="App">
       <header>
         <h1>Welcome to the chat room 💬</h1>
+        <SignOut />
       </header>
       <section>
         {hasLoggedIn ? (
@@ -37,8 +38,6 @@ function App() {
   );
 }
 
-export default App;
-
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -46,7 +45,7 @@ function SignIn() {
       console.log("signInWithGoogle -> err", err);
     });
   };
-
+  
   return (
     <center>
       <h1>Minimal Chat Room</h1>
@@ -57,3 +56,15 @@ function SignIn() {
     </center>
   );
 }
+
+function SignOut() {
+  return (
+    auth.currentUser && (
+      <button className="sign-out" onClick={() => auth.signOut()}>
+        Sign Out
+      </button>
+    )
+  );
+}
+
+export default App;
