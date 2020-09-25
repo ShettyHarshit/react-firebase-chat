@@ -24,31 +24,25 @@ function ChatRoom(props) {
     setFormValue("");
   };
 
-  console.log("ChatRoom -> messages", messages);
-
   return (
     <>
       <main>
         {messages &&
           messages.map(msg => (
-            <ChatMessage
-              auth={props.auth}
-              key={msg.id}
-              message={msg}
-            />
+            <ChatMessage auth={props.auth} key={msg.id} message={msg} />
           ))}
-          <span ref={dummy}></span>
-          </main>
-        <form onSubmit={sendMessage}>
-          <input
-            value={formValue}
-            onChange={e => setFormValue(e.target.value)}
-            placeholder="Type a message"
-          />
-          <button type="submit" disabled={!formValue}>
-            Send
-          </button>
-        </form>
+        <span ref={dummy}></span>
+      </main>
+      <form onSubmit={sendMessage}>
+        <input
+          value={formValue}
+          onChange={e => setFormValue(e.target.value)}
+          placeholder="Type a message"
+        />
+        <button type="submit" disabled={formValue === ""}>
+          Send
+        </button>
+      </form>
     </>
   );
 }
