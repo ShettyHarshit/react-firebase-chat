@@ -25,7 +25,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <section>
-          {user ? <ChatRoom firestore={firestore} /> : <SignIn />}       
+          {user ? (
+            <ChatRoom firebase={firebase} auth={auth} firestore={firestore} />
+          ) : (
+            <SignIn />
+          )}
         </section>
       </header>
     </div>
